@@ -38,7 +38,7 @@ var testCase = []struct {
 	{"United Kingdom", "GB54BARC20992012345678"},
 }
 
-func TestIban(t *testing.T) {
+func TestIsValid(t *testing.T) {
 	for _, v := range testCase {
 		if !IsValid(v.IBAN) {
 			t.Error("expected true for", v.Country, v.IBAN)
