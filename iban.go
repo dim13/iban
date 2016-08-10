@@ -6,6 +6,9 @@ import "math/big"
 func IsValid(iban string) bool {
 	i := new(big.Int)
 	t := big.NewInt(10)
+	if len(iban) < 4 || len(iban) > 34 {
+		return false
+	}
 	for _, v := range iban[4:] + iban[:4] {
 		switch {
 		case v >= 'A' && v <= 'Z':
