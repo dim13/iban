@@ -38,8 +38,10 @@ var testCase = map[string]string{
 
 func TestIsValid(t *testing.T) {
 	for country, iban := range testCase {
-		if !IsValid(iban) {
-			t.Error("expected true for", country, iban)
-		}
+		t.Run(country, func(t *testing.T) {
+			if !IsValid(iban) {
+				t.Errorf("%v, expected valid", iban)
+			}
+		})
 	}
 }
