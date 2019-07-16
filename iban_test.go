@@ -14,6 +14,7 @@ func TestIsValid(t *testing.T) {
 		{"Estonia", "EE382200221020145685"},
 		{"Finland", "FI2112345600000785"},
 		{"France", "FR1420041010050500013M02606"},
+		{"Germany", "DE27100777770209299700"},
 		{"Great Britain", "GB29NWBK60161331926819"},
 		{"Greece", "GR1601101250000000012300695"},
 		{"Hungary", "HU42117730161111101800000000"},
@@ -42,5 +43,11 @@ func TestIsValid(t *testing.T) {
 				t.Error(tc.IBAN, "expected valid")
 			}
 		})
+	}
+}
+
+func BenchmarkIsValid(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		IsValid("DE27100777770209299700")
 	}
 }
