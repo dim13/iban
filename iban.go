@@ -1,4 +1,4 @@
-// Package iban implements IBAN validator
+// Package iban implements IBAN number validator
 package iban
 
 import "math/big"
