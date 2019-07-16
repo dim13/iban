@@ -5,23 +5,24 @@ import "math/big"
 
 // IsValid IBAN
 func IsValid(iban string) bool {
-	i := new(big.Int)
-	t := big.NewInt(10)
 	if len(iban) < 4 || len(iban) > 34 {
 		return false
 	}
+	sum := new(big.Int)
+	ten := big.NewInt(10)
 	for _, v := range iban[4:] + iban[:4] {
 		switch {
 		case v >= 'A' && v <= 'Z':
-			ch := v - 'A' + 10
-			i.Add(i.Mul(i, t), big.NewInt(int64(ch/10)))
-			i.Add(i.Mul(i, t), big.NewInt(int64(ch%10)))
+			n := int64(v - 'A' + 10)
+			sum.Add(sum.Mul(sum, ten), big.NewInt(n/10))
+			sum.Add(sum.Mul(sum, ten), big.NewInt(n%10))
 		case v >= '0' && v <= '9':
-			i.Add(i.Mul(i, t), big.NewInt(int64(v-'0')))
+			n := int64(v - '0')
+			sum.Add(sum.Mul(sum, ten), big.NewInt(n))
 		case v == ' ':
 		default:
 			return false
 		}
 	}
-	return i.Mod(i, big.NewInt(97)).Int64() == 1
+	return sum.Mod(sum, big.NewInt(97)).Int64() == 1
 }
