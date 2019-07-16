@@ -1,7 +1,10 @@
 // Package iban implements IBAN number validator
 package iban
 
-import "math/big"
+import (
+	"math/big"
+	"unicode"
+)
 
 // IsValid IBAN
 func IsValid(iban string) bool {
@@ -11,17 +14,16 @@ func IsValid(iban string) bool {
 	sum := new(big.Int)
 	ten := big.NewInt(10)
 	for _, v := range iban[4:] + iban[:4] {
-		switch {
-		case v >= 'A' && v <= 'Z':
+		switch v = unicode.ToUpper(v); {
+		case unicode.IsLetter(v):
 			n := int64(v - 'A' + 10)
 			sum.Add(sum.Mul(sum, ten), big.NewInt(n/10))
 			sum.Add(sum.Mul(sum, ten), big.NewInt(n%10))
-		case v >= '0' && v <= '9':
+		case unicode.IsDigit(v):
 			n := int64(v - '0')
 			sum.Add(sum.Mul(sum, ten), big.NewInt(n))
-		case v == ' ':
-		default:
-			return false
+		case unicode.IsSpace(v):
+			// ignore
 		}
 	}
 	return sum.Mod(sum, big.NewInt(97)).Int64() == 1
