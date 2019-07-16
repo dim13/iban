@@ -22,8 +22,6 @@ func IsValid(iban string) bool {
 		case unicode.IsDigit(v):
 			n := int64(v - '0')
 			sum.Add(sum.Mul(sum, ten), big.NewInt(n))
-		case unicode.IsSpace(v):
-			// ignore
 		}
 	}
 	return sum.Mod(sum, big.NewInt(97)).Int64() == 1
