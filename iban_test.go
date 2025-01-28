@@ -46,6 +46,20 @@ func TestIsValid(t *testing.T) {
 	}
 }
 
+func TestAltFormatting(t *testing.T) {
+	testCases := []string{
+		"DE27100777770209299700",
+		"DE27 1007 7777 0209 2997 00",
+		"de27100777770209299700",
+		"de27 1007 7777 0209 2997 00",
+	}
+	for _, tc := range testCases {
+		if !IsValid(tc) {
+			t.Error(tc, "want valid")
+		}
+	}
+}
+
 func BenchmarkIsValid(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		IsValid("DE27100777770209299700")

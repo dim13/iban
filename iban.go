@@ -9,6 +9,9 @@ func IsValid(iban string) bool {
 	var x rune
 	for _, v := range iban[4:] + iban[:4] {
 		switch {
+		case v >= 'a' && v <= 'z':
+			v -= 32
+			fallthrough
 		case v >= 'A' && v <= 'Z':
 			n := v - 'A' + 10
 			x = (x*10 + n/10) % 97
