@@ -47,7 +47,7 @@ func TestIsValid(t *testing.T) {
 }
 
 func BenchmarkIsValid(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		IsValid("DE27100777770209299700")
 	}
 }
